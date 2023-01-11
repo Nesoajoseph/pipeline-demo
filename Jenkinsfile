@@ -7,7 +7,7 @@ Triggers:
 */
 
 def checkoutDetails;
-def isPullRequest = true;
+def isPullRequest = false;
 pipeline {
 	agent {
   	  kubernetes {
@@ -48,7 +48,6 @@ pipeline {
 				cleanWs()
 				script{
               checkoutDetails = checkout scm
-              isPullRequest = verifyPullRequest();
               stage('Build App'){
               		container('maven'){
               			println("Build App via maven/node/gradle etc")
@@ -97,16 +96,4 @@ pipeline {
     	cleanWs();
 		}
 	}
-}
-
-def verifyPullRequest(){
-		def pullRequestBranchName=env.branch_name;
-		def pullRequestToken=pullRequestBranchName.split('-')
-		if(pullRequestToken.size()==2 && pullRequestToken[0]=="PR"){
-			echo("Triggered by Pull Request "+pullRequestToken[1])
-			return true;
-		}else{
-			echo("Triggered by a commit")
-			return false;
-		}
 }
