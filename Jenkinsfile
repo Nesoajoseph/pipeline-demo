@@ -1,4 +1,4 @@
-/*
+/* 
 Triggers:
   1. For merge commit via pull request in main branch - Yes - (Triggers job based on configuration in Jenkins job)
   2. For commits in feature/bugfix branches - No - (Skips trigger based on configuration in Jenkikns job)
